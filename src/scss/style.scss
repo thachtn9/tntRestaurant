@@ -1,0 +1,71 @@
+.header-container {
+    height: 100px;
+    background-color: rgba(78, 73, 73, 0.952);
+    color: white;
+    img {
+        width: 70px;
+    }
+    a {
+        color: white !important;
+    }
+    .nav-link.active {
+        color: rgb(253, 158, 16) !important;
+        font-weight: 500;
+    }
+}
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px;
+    .card-item {
+        background-color: aqua;
+        width: 250px;
+        height: 100px;
+        padding: 5px;
+        .card-top {
+            float: right;
+            justify-content: flex-end;
+            gap: 5px;
+            color: #000000;
+            cursor: pointer;
+            :hover {
+                color: rgb(110, 108, 108);
+            }
+        }
+    }
+}
+
+.app-content {
+    // background-color: rgba(235, 193, 5, 0.952);
+    padding-top: 50px;
+    height: 100vh;
+    .restaurant-container {
+        // background-color: rgba(104, 97, 66, 0.952);
+        .restaurant-top {
+            .restaurant-top-title {
+                font-weight: 500;
+                background-color: red;
+                color: white;
+                padding: 5px;
+                margin-top: 30px;
+                margin-bottom: 10px;
+            }
+            .btn {
+                margin-top: 30px;
+            }
+        }
+
+        .restaurant-content {
+            margin-top: 15px;
+            .restaurant-title {
+                font-weight: 500;
+                background-color: red;
+                color: white;
+                padding: 5px;
+                margin-top: 30px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
