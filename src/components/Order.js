@@ -15,7 +15,7 @@ const Restaurant = () => {
   return (
     <div className="restaurant-container container">
       <div className="restaurant-top">
-        <div className="restaurant-top-title"> Thêm mới nhà hàng </div>
+        <div className="restaurant-top-title"> Thêm mới Order</div>
         <form className="row g-3">
           <div className="col-md-2">
             <label className="form-label">Tên nhà hàng</label>
