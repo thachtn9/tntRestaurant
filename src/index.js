@@ -10,6 +10,7 @@ import Restaurant from "./components/Restaurant";
 import Customer from "./components/Customer";
 import Table from "./components/Table";
 import Product from "./components/Product";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +23,15 @@ root.render(
         <Route path="product" element={<Product />}></Route>
       </Route>
     </Routes>
+    <ToastContainer
+      position="top-right"
+      autoClose={500}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      draggable
+      theme="light"></ToastContainer>
   </BrowserRouter>
 );
 
