@@ -1,13 +1,15 @@
 import axios from "./axiosCustom.js";
 export const entity = {
-  Restaurant: "retaurant",
+  Restaurant: "Restaurant",
   Customer: "Customer",
   Order: "Order",
   OrderDetail: "OrderDetail",
   Table: "Table",
   Product: "Product",
 };
-
+export const convertStringVND = (i) => {
+  return parseFloat(i).toLocaleString();
+};
 const getListbyEntity = (entity) => {
   let res = axios.get(`api/${entity}`);
   return res;

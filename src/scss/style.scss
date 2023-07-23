@@ -1,34 +1,41 @@
 .header-container {
-    height: 100px;
+    height          : 100px;
     background-color: rgba(78, 73, 73, 0.952);
-    color: white;
+    color           : white;
+
     img {
         width: 70px;
     }
+
     a {
         color: white !important;
     }
+
     .nav-link.active {
-        color: rgb(253, 158, 16) !important;
+        color      : rgb(253, 158, 16) !important;
         font-weight: 500;
     }
 }
+
 .card-list {
-    display: flex;
+    display  : flex;
     flex-wrap: wrap;
-    gap: 5px;
-    padding: 5px;
+    gap      : 5px;
+    padding  : 5px;
+
     .card-item {
         background-color: aqua;
-        width: 250px;
-        height: 100px;
-        padding: 5px;
+        width           : 250px;
+        min-height      : 110px;
+        padding         : 5px;
+
         .card-top {
-            float: right;
+            float          : right;
             justify-content: flex-end;
-            gap: 5px;
-            color: #000000;
-            cursor: pointer;
+            gap            : 5px;
+            color          : #000000;
+            cursor         : pointer;
+
             :hover {
                 color: rgb(110, 108, 108);
             }
@@ -39,18 +46,21 @@
 .app-content {
     // background-color: rgba(235, 193, 5, 0.952);
     padding-top: 50px;
-    height: 100vh;
+    height     : 100vh;
+
     .restaurant-container {
+
         // background-color: rgba(104, 97, 66, 0.952);
         .restaurant-top {
             .restaurant-top-title {
-                font-weight: 500;
+                font-weight     : 500;
                 background-color: red;
-                color: white;
-                padding: 5px;
-                margin-top: 30px;
-                margin-bottom: 10px;
+                color           : white;
+                padding         : 5px;
+                margin-top      : 30px;
+                margin-bottom   : 10px;
             }
+
             .btn {
                 margin-top: 30px;
             }
@@ -58,13 +68,139 @@
 
         .restaurant-content {
             margin-top: 15px;
+
             .restaurant-title {
-                font-weight: 500;
+                font-weight     : 500;
                 background-color: red;
-                color: white;
-                padding: 5px;
-                margin-top: 30px;
-                margin-bottom: 10px;
+                color           : white;
+                padding         : 5px;
+                margin-top      : 30px;
+                margin-bottom   : 10px;
+            }
+        }
+    }
+
+
+    .order-container {
+        height : 500px;
+        display: flex;
+
+        .order-left-product {
+            height          : 100%;
+            width           : 50%;
+            background-color: red;
+            height          : 500px;
+            overflow-y      : auto;
+
+            .product-item {
+                width           : calc(33.33% - 8px);
+                /* 33.33% để hiển thị 3 món trong 1 hàng */
+                height          : 100px;
+                /* Chiều cao của mỗi món ăn */
+                margin          : 1px;
+                /* Khoảng cách giữa các món ăn */
+                background-color: #f0f0f0;
+                cursor          : pointer;
+                user-select     : none;
+
+                &:hover {
+                    background-color: bisque;
+
+                    .product-price {
+                        font-weight: 600;
+                    }
+                }
+
+                .product-name {
+                    font-weight: 600;
+                    padding-top: 10px;
+                    font       : 1.5em sans-serif;
+                }
+
+                .product-price {
+                    float      : right;
+                    padding-top: 17px;
+                }
+            }
+        }
+
+        .order-right-detail {
+            height  : 100%;
+            width   : 50%;
+            position: relative;
+
+            .order-detail-content {
+                background-color: #f0f0f0;
+                height          : 93%;
+                width           : 100%;
+                padding         : 15px;
+                overflow-y      : auto;
+
+                .order-list {
+                    width  : 100%;
+                    border : 1px solid #ccc;
+                    padding: 10px;
+                }
+
+                .order-item {
+                    display              : grid;
+                    grid-template-columns: 40% 15% 18% 18% 10%;
+                    align-items          : center;
+                    border-bottom        : 1px solid #ccc;
+                    padding              : 8px 0;
+                }
+
+                .item-header {
+                    color      : red;
+                    font-weight: 600;
+                }
+
+                .product-name,
+                .quantity,
+                .unit-price,
+                .total-price {
+                    padding: 0 5px;
+                }
+
+                .delete-btn {
+                    background-color: #7f7f7f;
+                    color           : #fff;
+                    width           : 60%;
+                    border          : none;
+                    padding         : 5px 10px;
+                    cursor          : pointer;
+                }
+
+                /* Hiển thị hover khi rê chuột vào button xóa */
+                .delete-btn:hover {
+                    background-color: #804747;
+                }
+            }
+
+            .order-detail-bottom {
+                display         : flex;
+                align-items     : center;
+                justify-content : space-evenly;
+                background-color: rgb(214, 213, 213);
+                position        : absolute;
+                bottom          : 0;
+                width           : 100%;
+                height          : 50px;
+
+                .lbl-totalPrice {
+                    font-weight: 500;
+                    font-size  : 1.1rem;
+                }
+
+                .btn {
+                    height          : 90%;
+                    width           : 150px;
+                    background-color: #ffa200;
+                    border          : 0px;
+                    color           : white;
+                    font-size       : 1.1rem;
+                    font-weight     : 500;
+                }
             }
         }
     }

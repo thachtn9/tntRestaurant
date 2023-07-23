@@ -2,21 +2,46 @@ import { useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { TiDelete } from "react-icons/ti";
 import Accordion from "react-bootstrap/Accordion";
+import {
+  entity,
+  getListbyEntity,
+  postInsertUpdateEntity,
+} from "../services/appServices";
 const Table = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleToggle = () => {
     setIsExpanded((prevState) => !prevState);
   };
-  const [restaurantName, setRestaurantName] = useState("");
-  const [restaurantLocation, setRestaurantLocation] = useState("");
-  const [listRestaurant, setListRestaurant] = useState({});
-  const handleAddClick = () => {
-    console.log(restaurantName, restaurantLocation);
+
+  const [restaurantId, setRestaurantId] = useState(0);
+  const [tableName, setTableName] = useState("");
+  const [listRes_Table, setListRes_Table] = useState([]);
+  const [listRestaurant, setListRestaurant] = useState([]);
+  const handleAddClick = async () => {
+    var resT = {
+      restaurantId: restaurantId,
+      tableName: tableName,
+    };
+    let res = await postInsertUpdateEntity(entity.Table, resT);
+    if (res.code === 200) {
+      getListData();
+    }
   };
+
   useEffect(() => {
-    setListData();
-  });
-  const setListData = () => {};
+    getListData();
+  }, []);
+  const getListData = async () => {
+    let listR = await getListbyEntity(entity.Restaurant);
+    if (listR.code === 200) {
+      setListRestaurant(listR.data);
+    }
+    let res = await getListbyEntity(entity.Table);
+    console.log(res);
+    if (res.code === 200) {
+      setListRes_Table(res.data);
+    }
+  };
   return (
     <div className="restaurant-container container">
       <div className="restaurant-top">
@@ -24,23 +49,38 @@ const Table = () => {
         <form className="row g-3">
           <div className="col-md-2">
             <label className="form-label">Nhà hàng</label>
-            <input
+            {/* <input
               type="text"
               className="form-control"
               value={restaurantName}
               onChange={(event) => {
                 setRestaurantName(event.target.value);
               }}
-            />
+            /> */}
+            <select
+              className="form-select"
+              value={restaurantId}
+              onChange={(e) => setRestaurantId(e.target.value)}
+            >
+              <option value={0}>Chọn nhà hàng</option>
+              {listRestaurant.map((restaurant) => (
+                <option
+                  key={restaurant.restaurantID}
+                  value={restaurant.restaurantID}
+                >
+                  {restaurant.restaurantName}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="col-md-2">
             <label className="form-label">Tên bàn</label>
             <input
               type="text"
               className="form-control"
-              value={restaurantLocation}
+              value={tableName}
               onChange={(event) => {
-                setRestaurantLocation(event.target.value);
+                setTableName(event.target.value);
               }}
             />
           </div>
@@ -50,7 +90,8 @@ const Table = () => {
               className="btn btn-success"
               onClick={() => {
                 handleAddClick();
-              }}>
+              }}
+            >
               Thêm mới
             </button>
           </div>
@@ -60,303 +101,37 @@ const Table = () => {
         <div className="restaurant-title"> Danh sách nhà hàng - bàn</div>
         <div className="restaurant-list">
           <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Nhà hàng #1</Accordion.Header>
-              <Accordion.Body>
-                {" "}
-                <div className="card-list">
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
+            {listRes_Table.map((item) => {
+              return (
+                <Accordion.Item eventKey={item.restaurantID}>
+                  <Accordion.Header>
+                    #{item.restaurantID} {item.restaurantName}
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <div className="card-list">
+                      {item.tables.map((t) => {
+                        return (
+                          <div className="card-item">
+                            <div className="card-top d-flex">
+                              <div>
+                                <FiEdit />
+                              </div>
+                              <div>
+                                <TiDelete />
+                              </div>
+                            </div>
+                            <div className="card-content">
+                              <div> #{t.tableID}</div>
+                              <div className="fs-3"> {t.tableName}</div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div className="card-content">
-                      <div> #1</div>
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-              <Accordion.Header>Nhà h #2</Accordion.Header>
-              <Accordion.Body>
-                <div className="card-list">
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> #1</div>
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                  <div className="card-item">
-                    <div className="card-top d-flex">
-                      <div>
-                        <FiEdit />
-                      </div>
-                      <div>
-                        <TiDelete />
-                      </div>
-                    </div>
-                    <div className="card-content">
-                      <div> Nhà hàng A</div>
-                      <div> Quận 1 </div>
-                    </div>
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
+                  </Accordion.Body>
+                </Accordion.Item>
+              );
+            })}
           </Accordion>
         </div>
       </div>
